@@ -14,6 +14,11 @@ public class InputView {
         return readRawInput();
     }
 
+    public static String readBonusNumber() {
+        System.out.println(InputMessage.BONUS_NUMBER);
+        return readRawInput();
+    }
+
     private static String readRawInput() {
         return Console.readLine();
     }
