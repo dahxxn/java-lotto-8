@@ -7,9 +7,9 @@ public enum ErrorMessage {
     PURCHASE_AMOUNT_ERROR_INVALID_UNIT("구입 금액은 1000원 단위여야 합니다.");
 
     private static final String PREFIX = "[ERROR] ";
-    private String message;
+    private final String message;
 
-    private ErrorMessage(String message) {
+    ErrorMessage(String message) {
         this.message = message;
     }
 
