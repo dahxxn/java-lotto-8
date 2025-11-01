@@ -3,47 +3,61 @@ package lotto.domain;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_INVALID_UNIT;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_POSITIVE;
+import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_OUT_OF_RANGE;
 
 public final class PurchaseAmount {
-    private final int amount;
-    private static final int ZERO = 0;
-    private static final int LOTTO_UNIT = 1000;
+    private static final String NUMBER_REGEX = "^\\d+$";
+    private static final long ZERO = 0L;
+    private static final long LOTTO_UNIT = 1000L;
+
+    private final long amount;
 
     public PurchaseAmount(String amountInput) {
-        int amount = preprocessAmountInput(amountInput);
+        long amount = preprocessAmountInput(amountInput);
         validateAmount(amount);
         this.amount = amount;
     }
 
-    public int getLottoCount() {
+    public long getLottoCount() {
         return amount / LOTTO_UNIT;
     }
 
-    private int preprocessAmountInput(String amountInput) {
+    private long preprocessAmountInput(String amountInput) {
         String strippedAmount = amountInput.strip();
         return changeToNumber(strippedAmount);
     }
 
-    private int changeToNumber(String stripedAmount) {
+    private long changeToNumber(String strippedAmount) {
         try {
-            return Integer.parseInt(stripedAmount);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_NOT_NUMERIC.getMessage());
+            return Long.parseLong(strippedAmount);
+        } catch (NumberFormatException error) {
+            throw createExceptionByParseFailure(strippedAmount);
         }
     }
 
-    private void validateAmount(int amount) {
+    private IllegalArgumentException createExceptionByParseFailure(String strippedAmount) {
+        if (isNotNumeric(strippedAmount)) {
+            return new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_NOT_NUMERIC.getMessage());
+        }
+        return new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_OUT_OF_RANGE.getMessage());
+    }
+
+    private boolean isNotNumeric(String strippedAmount) {
+        return !strippedAmount.matches(NUMBER_REGEX);
+    }
+
+    private void validateAmount(long amount) {
         validatePositive(amount);
         validateUnit(amount);
     }
 
-    private void validatePositive(int amount) {
+    private void validatePositive(long amount) {
         if (amount <= ZERO) {
             throw new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_NOT_POSITIVE.getMessage());
         }
     }
 
-    private void validateUnit(int amount) {
+    private void validateUnit(long amount) {
         if (amount % LOTTO_UNIT != ZERO) {
             throw new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_INVALID_UNIT.getMessage());
         }

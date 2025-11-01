@@ -3,6 +3,7 @@ package lotto.domain;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_INVALID_UNIT;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_POSITIVE;
+import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -57,6 +58,18 @@ class PurchaseAmountTest {
         assertThatThrownBy(() -> new PurchaseAmount(amountInput))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PURCHASE_AMOUNT_ERROR_NOT_NUMERIC.getMessage());
+    }
+
+    @DisplayName("전처리 예외테스트: Long 범위를 초과하면 IllegalArgumentException이 발생한다")
+    @Test
+    void 구입_금액_입력값_전처리_예외_범위초과() {
+        // given
+        String amountInput = "99999999999999999999";
+
+        // when & then
+        assertThatThrownBy(() -> new PurchaseAmount(amountInput))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PURCHASE_AMOUNT_ERROR_OUT_OF_RANGE.getMessage());
     }
 
     @DisplayName("검증 정상테스트: 양수이면 정상 처리한다")
@@ -117,12 +130,12 @@ class PurchaseAmountTest {
             "2000, 2",
             "10000, 10"
     })
-    void 로또_수량_발행_테스트(String amountInput, int expectedLottoCount) {
+    void 로또_수량_발행_테스트(String amountInput, long expectedLottoCount) {
         // given
         PurchaseAmount purchaseAmount = new PurchaseAmount(amountInput);
 
         // when
-        int lottoCount = purchaseAmount.getLottoCount();
+        long lottoCount = purchaseAmount.getLottoCount();
 
         // then
         assertThat(lottoCount).isEqualTo(expectedLottoCount);
