@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_INVALID_UNIT;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_POSITIVE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,7 +60,7 @@ class PurchaseAmountTest {
 
     @DisplayName("검증 정상테스트: 양수이면 정상 처리한다")
     @ParameterizedTest
-    @ValueSource(strings = {"1", "100", "1000", "10000"})
+    @ValueSource(strings = {"1000", "10000"})
     void 구입_금액_검증_양수_정상_양수값(String amountInput) {
         // when
         PurchaseAmount purchaseAmount = new PurchaseAmount(amountInput);
@@ -86,4 +87,26 @@ class PurchaseAmountTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PURCHASE_AMOUNT_ERROR_NOT_POSITIVE.getMessage());
     }
+
+    @DisplayName("검증 정상테스트: 1000원 단위면 정상 처리한다")
+    @ParameterizedTest
+    @ValueSource(strings = {"1000", "2000", "10000", "12000"})
+    void 구입_금액_검증_1000원_단위_정상(String amountInput) {
+        // when
+        PurchaseAmount purchaseAmount = new PurchaseAmount(amountInput);
+
+        // then
+        assertThat(purchaseAmount).isNotNull();
+    }
+
+    @DisplayName("검증 예외테스트: 1000원 단위가 아니면 IllegalArgumentException이 발생한다")
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "10", "1100", "1200"})
+    void 구입_금액_검증_1000원_단위_예외(String amountInput) {
+        // when & then
+        assertThatThrownBy(() -> new PurchaseAmount(amountInput))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PURCHASE_AMOUNT_ERROR_INVALID_UNIT.getMessage());
+    }
+
 }
