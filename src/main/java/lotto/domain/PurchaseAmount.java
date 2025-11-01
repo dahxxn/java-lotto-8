@@ -4,7 +4,7 @@ import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_INVALID_UNIT
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_POSITIVE;
 
-public class PurchaseAmount {
+public final class PurchaseAmount {
     private final int amount;
     private static final int ZERO = 0;
     private static final int LOTTO_UNIT = 1000;
@@ -15,9 +15,13 @@ public class PurchaseAmount {
         this.amount = amount;
     }
 
+    public int getLottoCount() {
+        return amount / LOTTO_UNIT;
+    }
+
     private int preprocessAmountInput(String amountInput) {
-        String stripedAmount = amountInput.strip();
-        return changeToNumber(stripedAmount);
+        String strippedAmount = amountInput.strip();
+        return changeToNumber(strippedAmount);
     }
 
     private int changeToNumber(String stripedAmount) {

@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PurchaseAmountTest {
@@ -109,4 +110,21 @@ class PurchaseAmountTest {
                 .hasMessage(PURCHASE_AMOUNT_ERROR_INVALID_UNIT.getMessage());
     }
 
+    @DisplayName("로또 수량 발행 테스트: 구매할 로또 수량을 계산한다")
+    @ParameterizedTest
+    @CsvSource({
+            "1000, 1",
+            "2000, 2",
+            "10000, 10"
+    })
+    void 로또_수량_발행_테스트(String amountInput, int expectedLottoCount) {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount(amountInput);
+
+        // when
+        int lottoCount = purchaseAmount.getLottoCount();
+
+        // then
+        assertThat(lottoCount).isEqualTo(expectedLottoCount);
+    }
 }
