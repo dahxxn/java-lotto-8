@@ -8,6 +8,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Lottos {
     private final List<Lotto> lottos;
@@ -15,6 +16,10 @@ public class Lottos {
     public Lottos(long lottoCount) {
         lottos = new ArrayList<>();
         generateAllLotto(lottoCount);
+    }
+
+    public void forEach(Consumer<Lotto> action) {
+        lottos.forEach(action);
     }
 
     private void generateAllLotto(long lottoCount) {

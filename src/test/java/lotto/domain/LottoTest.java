@@ -57,4 +57,17 @@ class LottoTest {
         // then
         assertThat(lotto).isNotNull();
     }
+
+    @DisplayName("numbers()는 생성된 번호를 값 기반으로 그대로 반환한다")
+    @Test
+    void numbers_값기반으로_정상반환한다() {
+        // given
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+
+        // when
+        List<Integer> view = lotto.numbers();
+
+        // then
+        assertThat(view).containsExactly(1, 2, 3, 4, 5, 6);
+    }
 }
