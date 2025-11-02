@@ -1,10 +1,12 @@
 package lotto.controller;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
+import static lotto.view.message.OutputMessage.LOTTO_COUNT_OUTPUT_FORMAT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -40,6 +42,20 @@ class LottoControllerTest extends NsTest {
         assertSimpleTest(() -> {
             runException(amountInput);
             assertThat(output()).contains(PURCHASE_AMOUNT_ERROR_HEADER);
+        });
+    }
+
+    @DisplayName("로또 발행 테스트: 구입한 금액에 따른 로또를 발행하고 발행 결과를 출력한다")
+    @Test
+    void 로또_발행_정상_테스트() {
+        // given
+        String amountInput = "10000";
+
+        // when & then
+        assertSimpleTest(() -> {
+            run(amountInput);
+            assertThat(output()).doesNotContain(PURCHASE_AMOUNT_ERROR_HEADER);
+            assertThat(output()).contains(LOTTO_COUNT_OUTPUT_FORMAT.formatted(10));
         });
     }
 
