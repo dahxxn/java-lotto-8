@@ -140,4 +140,60 @@ class PurchaseAmountTest {
         // then
         assertThat(lottoCount).isEqualTo(expectedLottoCount);
     }
+
+    @DisplayName("수익률 계산 테스트: 총 상금이 0원이면 수익률은 0%다")
+    @Test
+    void 수익률_계산_0원() {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount("8000");
+        long totalPrize = 0;
+
+        // when
+        double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+
+        // then
+        assertThat(profitRate).isEqualTo(0.0);
+    }
+
+    @DisplayName("수익률 계산 테스트: 구입 금액과 상금이 같으면 수익률은 100%다")
+    @Test
+    void 수익률_계산_100프로() {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount("8000");
+        long totalPrize = 8000;
+
+        // when
+        double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+
+        // then
+        assertThat(profitRate).isEqualTo(100.0);
+    }
+
+    @DisplayName("수익률 계산 테스트: 상금이 구입 금액의 절반이면 수익률은 50%다")
+    @Test
+    void 수익률_계산_50프로() {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount("8000");
+        long totalPrize = 4000;
+
+        // when
+        double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+
+        // then
+        assertThat(profitRate).isEqualTo(50.0);
+    }
+
+    @DisplayName("수익률 계산 테스트: 상금이 구입 금액보다 많으면 100%를 초과한다")
+    @Test
+    void 수익률_계산_100프로_초과() {
+        // given
+        PurchaseAmount purchaseAmount = new PurchaseAmount("8000");
+        long totalPrize = 16000;
+
+        // when
+        double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+
+        // then
+        assertThat(profitRate).isEqualTo(200.0);
+    }
 }

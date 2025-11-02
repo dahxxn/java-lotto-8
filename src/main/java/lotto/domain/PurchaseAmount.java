@@ -22,6 +22,10 @@ public final class PurchaseAmount {
         return amount / LOTTO_UNIT;
     }
 
+    public double calculateProfitRate(long totalPrize) {
+        return (double) totalPrize / this.amount * 100;
+    }
+
     private long preprocessAmountInput(String amountInput) {
         String strippedAmount = amountInput.strip();
         return changeToNumber(strippedAmount);
