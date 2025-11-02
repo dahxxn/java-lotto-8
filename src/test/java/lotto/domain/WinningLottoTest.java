@@ -7,6 +7,7 @@ import static lotto.domain.error.ErrorMessage.WINNING_LOTTO_ERROR_NOT_NUMERIC;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +74,7 @@ class WinningLottoTest {
                 .hasMessage(LOTTO_ERROR_NUMBER_DUPLICATE.getMessage());
     }
 
-    @DisplayName("번호 포함 확인 테스트: 해당 번호가 포함되어 있을때 true를 반환한다.")
+    @DisplayName("번호 포함 확인 테스트: 해당 번호가 포함되어 있을때 true를 반환한다")
     @Test
     void 당첨번호_번호_포함_확인_테스트_있을때() {
         // given
@@ -85,7 +86,7 @@ class WinningLottoTest {
         assertThat(winningLotto.contains(number)).isTrue();
     }
 
-    @DisplayName("번호 포함 확인 테스트: 해당 번호가 포함되어 있지 않을때 false를 반환한다.")
+    @DisplayName("번호 포함 확인 테스트: 해당 번호가 포함되어 있지 않을때 false를 반환한다")
     @Test
     void 당첨번호_번호_포함_확인_테스트_없을때() {
         // given
@@ -95,5 +96,61 @@ class WinningLottoTest {
 
         // when & then
         assertThat(winningLotto.contains(number)).isFalse();
+    }
+
+    @DisplayName("일치 개수 계산 테스트: 6개 모두 일치하면 6을 반환한다")
+    @Test
+    void 당첨번호_일치개수_6개() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+
+        // when
+        int matchCount = winningLotto.countMatches(lotto);
+
+        // then
+        assertThat(matchCount).isEqualTo(6);
+    }
+
+    @DisplayName("일치 개수 계산 테스트: 5개 일치하면 5를 반환한다")
+    @Test
+    void 당첨번호_일치개수_5개() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 7));
+
+        // when
+        int matchCount = winningLotto.countMatches(lotto);
+
+        // then
+        assertThat(matchCount).isEqualTo(5);
+    }
+
+    @DisplayName("일치 개수 계산 테스트: 3개 일치하면 3을 반환한다")
+    @Test
+    void 당첨번호_일치개수_3개() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 40, 41, 42));
+
+        // when
+        int matchCount = winningLotto.countMatches(lotto);
+
+        // then
+        assertThat(matchCount).isEqualTo(3);
+    }
+
+    @DisplayName("일치 개수 계산 테스트: 하나도 일치하지 않으면 0을 반환한다")
+    @Test
+    void 당첨번호_일치개수_0개() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        Lotto lotto = new Lotto(List.of(40, 41, 42, 43, 44, 45));
+
+        // when
+        int matchCount = winningLotto.countMatches(lotto);
+
+        // then
+        assertThat(matchCount).isEqualTo(0);
     }
 }
