@@ -8,7 +8,7 @@ public class InputView {
         return readRawInput(InputMessage.PURCHASE_AMOUNT);
     }
 
-    public static String readWinningNumbers() {
+    public static String readWinningLotto() {
         return readRawInput(InputMessage.WINNING_NUMBERS);
     }
 
