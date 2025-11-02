@@ -7,6 +7,8 @@ import static lotto.domain.error.ErrorMessage.BONUS_NUMBER_ERROR_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
+import lotto.constant.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -65,5 +67,95 @@ class WinningNumbersTest {
         assertThatThrownBy(() -> new WinningNumbers(winningLotto, bonusNumberInput))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BONUS_NUMBER_ERROR_DUPLICATE.getMessage());
+    }
+
+    @DisplayName("등수 판단 테스트: 6개 일치하면 1등이다")
+    @Test
+    void 등수판단_1등() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FIRST);
+    }
+
+    @DisplayName("등수 판단 테스트: 5개 일치 + 보너스 일치하면 2등이다")
+    @Test
+    void 등수판단_2등() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 7));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.SECOND);
+    }
+
+    @DisplayName("등수 판단 테스트: 5개 일치하면 3등이다")
+    @Test
+    void 등수판단_3등() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 8));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.THIRD);
+    }
+
+    @DisplayName("등수 판단 테스트: 4개 일치하면 4등이다")
+    @Test
+    void 등수판단_4등() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 40, 41));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FOURTH);
+    }
+
+    @DisplayName("등수 판단 테스트: 3개 일치하면 5등이다")
+    @Test
+    void 등수판단_5등() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 40, 41, 42));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.FIFTH);
+    }
+
+    @DisplayName("등수 판단 테스트: 2개 이하 일치하면 꽝이다")
+    @Test
+    void 등수판단_꽝() {
+        // given
+        WinningLotto winningLotto = new WinningLotto("1,2,3,4,5,6");
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, "7");
+        Lotto lotto = new Lotto(List.of(1, 2, 40, 41, 42, 43));
+
+        // when
+        Rank rank = winningNumbers.determineRank(lotto);
+
+        // then
+        assertThat(rank).isEqualTo(Rank.NONE);
     }
 }

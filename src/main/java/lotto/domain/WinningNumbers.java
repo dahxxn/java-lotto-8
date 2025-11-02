@@ -6,6 +6,8 @@ import static lotto.domain.error.ErrorMessage.BONUS_NUMBER_ERROR_DUPLICATE;
 import static lotto.domain.error.ErrorMessage.BONUS_NUMBER_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.BONUS_NUMBER_ERROR_OUT_OF_RANGE;
 
+import lotto.constant.Rank;
+
 public class WinningNumbers {
     private final WinningLotto winningLotto;
     private final int bonusNumber;
@@ -15,6 +17,12 @@ public class WinningNumbers {
         int bonusNumber = preprocessBonusNumberInput(bonusNumberInput);
         validateBonusNumber(bonusNumber);
         this.bonusNumber = bonusNumber;
+    }
+
+    public Rank determineRank(Lotto lotto) {
+        int matchCount = winningLotto.countMatches(lotto);
+        boolean matchBonus = lotto.numbers().contains(bonusNumber);
+        return Rank.of(matchCount, matchBonus);
     }
 
     private int preprocessBonusNumberInput(String bonusNumberInput) {
