@@ -8,7 +8,13 @@ public enum ErrorMessage {
 
     LOTTO_ERROR_NOT_SIX_COUNT("로또 번호는 6개여야 합니다."),
     LOTTO_ERROR_NUMBER_OUT_OF_RANGE("로또 번호는 1과 45사이의 숫자여야 합니다."),
-    LOTTO_ERROR_NUMBER_DUPLICATE("로또 번호는 중복되지 않는 숫자여야 합니다.");
+    LOTTO_ERROR_NUMBER_DUPLICATE("로또 번호는 중복되지 않는 숫자여야 합니다."),
+
+    WINNING_LOTTO_ERROR_NOT_NUMERIC("당첨 번호는 숫자여야 합니다."),
+
+    BONUS_NUMBER_ERROR_NOT_NUMERIC("보너스 번호는 숫자여야 합니다."),
+    BONUS_NUMBER_ERROR_DUPLICATE("보너스 번호는 당첨 번호와 중복되지 않은 숫자여야 합니다."),
+    BONUS_NUMBER_ERROR_OUT_OF_RANGE("보너스 번호는 1과 45사이의 숫자여야 합니다.");
 
     private static final String PREFIX = "[ERROR] ";
     private final String message;
