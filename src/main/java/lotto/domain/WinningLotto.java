@@ -2,8 +2,8 @@ package lotto.domain;
 
 import static lotto.domain.error.ErrorMessage.WINNING_LOTTO_ERROR_NOT_NUMERIC;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class WinningLotto {
     private static final String SPLIT_REGEX = ",";
@@ -26,13 +26,10 @@ public class WinningLotto {
     }
 
     private List<Integer> preprocessWinningNumbersInput(String winningNumbersInput) {
-        List<Integer> numbers = new ArrayList<>();
-        for (String numberToken : winningNumbersInput.split(SPLIT_REGEX)) {
-            String strippedNumberToken = numberToken.strip();
-            int number = changeToNumber(strippedNumberToken);
-            numbers.add(number);
-        }
-        return numbers;
+        return Stream.of(winningNumbersInput.split(SPLIT_REGEX))
+                .map(String::strip)
+                .map(this::changeToNumber)
+                .toList();
     }
 
     private int changeToNumber(String numberToken) {
