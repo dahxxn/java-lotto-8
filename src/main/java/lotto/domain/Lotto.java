@@ -43,9 +43,9 @@ public class Lotto {
     }
 
     private void validateNumberDuplicate(List<Integer> numbers) {
-        int numberCount = new HashSet<>(numbers).size();
-        if (numberCount < numbers.size()) {
+        if (new HashSet<>(numbers).size() < numbers.size()) {
             throw new IllegalArgumentException(LOTTO_ERROR_NUMBER_DUPLICATE.getMessage());
         }
     }
+
 }
