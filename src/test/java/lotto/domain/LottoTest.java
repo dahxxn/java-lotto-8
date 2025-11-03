@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class LottoTest {
+
     @DisplayName("로또 번호의 개수가 6개가 넘어가면 예외가 발생한다")
     @Test
     void 로또_번호의_개수가_6개가_넘어가면_예외가_발생한다() {
@@ -22,10 +23,10 @@ class LottoTest {
     @DisplayName("로또 번호의 개수가 6개 미만이면 예외가 발생한다")
     @Test
     void 로또_번호의_개수가_6개가_미만이면_예외가_발생한다() {
+        // given & when & then
         assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 
     @DisplayName("로또 번호에 중복된 숫자가 있으면 예외가 발생한다")
     @Test
@@ -52,7 +53,6 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-
     @DisplayName("로또 번호가 유효할 경우 정상적으로 Lotto 객체가 생성된다")
     @Test
     void 로또_번호가_유효하면_Lotto_객체가_생성된다() {
@@ -73,18 +73,23 @@ class LottoTest {
         Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
 
         // when
-        List<Integer> view = lotto.numbers();
+        List<Integer> numbersCopy = lotto.numbers();
 
         // then
-        assertThat(view).containsExactly(1, 2, 3, 4, 5, 6);
+        assertThat(numbersCopy).containsExactly(1, 2, 3, 4, 5, 6);
     }
 
     @DisplayName("numbers()로 반환된 리스트는 불변이다")
     @Test
     void numbers_불변성_검증() {
+        // given
         Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        List<Integer> view = lotto.numbers();
-        assertThatThrownBy(() -> view.add(7))
+
+        // when
+        List<Integer> numbersCopy = lotto.numbers();
+
+        // then
+        assertThatThrownBy(() -> numbersCopy.add(7))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }
