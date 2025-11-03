@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class LottoControllerTest extends NsTest {
-
     private static final String ERROR_HEADER = "[ERROR]";
     private static final String RESULT_HEADER = "당첨 통계";
     private static final String PROFIT_RATE_PHRASE = "총 수익률은";
