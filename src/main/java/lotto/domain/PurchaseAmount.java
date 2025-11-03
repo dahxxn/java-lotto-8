@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import static lotto.constant.LottoSymbol.LOTTO_PRICE;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_INVALID_UNIT;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_NUMERIC;
 import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_NOT_POSITIVE;
@@ -8,7 +9,7 @@ import static lotto.domain.error.ErrorMessage.PURCHASE_AMOUNT_ERROR_OUT_OF_RANGE
 public final class PurchaseAmount {
     private static final String NUMBER_REGEX = "^\\d+$";
     private static final long ZERO = 0L;
-    private static final long LOTTO_UNIT = 1000L;
+    private static final double PERCENT = 100.0;
 
     private final long amount;
 
@@ -19,11 +20,11 @@ public final class PurchaseAmount {
     }
 
     public long getLottoCount() {
-        return amount / LOTTO_UNIT;
+        return amount / LOTTO_PRICE;
     }
 
     public double calculateProfitRate(long totalPrize) {
-        return (double) totalPrize / this.amount * 100;
+        return (double) totalPrize / this.amount * PERCENT;
     }
 
     private long preprocessAmountInput(String amountInput) {
@@ -62,7 +63,7 @@ public final class PurchaseAmount {
     }
 
     private void validateUnit(long amount) {
-        if (amount % LOTTO_UNIT != ZERO) {
+        if (amount % LOTTO_PRICE != ZERO) {
             throw new IllegalArgumentException(PURCHASE_AMOUNT_ERROR_INVALID_UNIT.getMessage());
         }
     }
