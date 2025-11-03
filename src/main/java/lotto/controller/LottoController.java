@@ -10,31 +10,33 @@ import lotto.view.OutputView;
 
 public class LottoController {
 
-    public LottoController() {
-    }
-
     public void run() {
         PurchaseAmount purchaseAmount = inputPurchaseAmount();
-        Lottos lottos = new Lottos(purchaseAmount.getLottoCount());
-        OutputView.printPurchaseLottoResult(purchaseAmount.getLottoCount(), lottos);
 
-        WinningLotto winningLotto = inputWinningLotto();
-        WinningNumbers winningNumbers = inputWinningNumbers(winningLotto);
+        long lottoCount = purchaseAmount.getLottoCount();
+        Lottos lottos = new Lottos(lottoCount);
+        OutputView.printPurchaseLottoResult(lottoCount, lottos);
+
+        WinningNumbers winningNumbers = readWinningNumbers();
 
         LottoResult lottoResult = lottos.calculateResult(winningNumbers);
-
         long totalPrize = lottoResult.calculateTotalPrize();
         double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+
         OutputView.printResult(lottoResult, profitRate);
+    }
+
+    private WinningNumbers readWinningNumbers() {
+        WinningLotto winningLotto = inputWinningLotto();
+        return inputWinningNumbers(winningLotto);
     }
 
     private PurchaseAmount inputPurchaseAmount() {
         while (true) {
             try {
-                String amountInput = InputView.readPurchaseAmount();
-                return new PurchaseAmount(amountInput);
-            } catch (IllegalArgumentException error) {
-                OutputView.printErrorMessage(error);
+                return new PurchaseAmount(InputView.readPurchaseAmount());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e);
             }
         }
     }
@@ -42,10 +44,9 @@ public class LottoController {
     private WinningLotto inputWinningLotto() {
         while (true) {
             try {
-                String winningNumbersInput = InputView.readWinningLotto();
-                return new WinningLotto(winningNumbersInput);
-            } catch (IllegalArgumentException error) {
-                OutputView.printErrorMessage(error);
+                return new WinningLotto(InputView.readWinningLotto());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e);
             }
         }
     }
@@ -53,13 +54,11 @@ public class LottoController {
     private WinningNumbers inputWinningNumbers(WinningLotto winningLotto) {
         while (true) {
             try {
-                String bonusNumberInput = InputView.readBonusNumber();
-                return new WinningNumbers(winningLotto, bonusNumberInput);
-            } catch (IllegalArgumentException error) {
-                OutputView.printErrorMessage(error);
+                return new WinningNumbers(winningLotto, InputView.readBonusNumber());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e);
             }
         }
     }
-
-
 }
+
