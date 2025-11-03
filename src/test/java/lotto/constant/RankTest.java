@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RankTest {
-
     @DisplayName("등수 판단 테스트: 6개 일치하면 1등이다")
     @Test
     void of_1등() {
@@ -96,5 +95,4 @@ class RankTest {
         assertThat(rank).isEqualTo(Rank.NONE);
         assertThat(rank.getPrize()).isEqualTo(0);
     }
-
 }

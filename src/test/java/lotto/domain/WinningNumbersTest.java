@@ -15,7 +15,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class WinningNumbersTest {
-
     @DisplayName("생성 정상테스트: 보너스 번호가 유효하고 당첨번호와 중복되지 않으면 생성된다")
     @Test
     void 보너스번호_정상_생성() {
