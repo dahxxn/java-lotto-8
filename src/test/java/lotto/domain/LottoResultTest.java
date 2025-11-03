@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class LottoResultTest {
-
     @DisplayName("로또 결과 생성 테스트: 등수별 개수를 담은 Map으로 LottoResult가 생성된다")
     @Test
     void 로또_결과_생성_테스트() {
