@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class WinningLottoTest {
-
     @DisplayName("전처리 정상테스트: 쉼표와 공백을 포함한 입력도 정상 파싱된다")
     @Test
     void 당첨번호_전처리_정상_공백허용() {
