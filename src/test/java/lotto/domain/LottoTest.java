@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class LottoTest {
-
     @DisplayName("로또 번호의 개수가 6개가 넘어가면 예외가 발생한다")
     @Test
     void 로또_번호의_개수가_6개가_넘어가면_예외가_발생한다() {

@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class LottosTest extends NsTest {
-
     @DisplayName("생성 정상테스트: 전달한 수만큼 Lotto를 생성해도 예외가 발생하지 않는다")
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 8})
@@ -221,7 +220,6 @@ class LottosTest extends NsTest {
                 List.of(30, 31, 32, 33, 34, 35)
         );
     }
-
 
     @Override
     protected void runMain() {
