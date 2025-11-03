@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.domain.LottoResult;
 import lotto.domain.Lottos;
 import lotto.domain.PurchaseAmount;
 import lotto.domain.WinningLotto;
@@ -19,6 +20,12 @@ public class LottoController {
 
         WinningLotto winningLotto = inputWinningLotto();
         WinningNumbers winningNumbers = inputWinningNumbers(winningLotto);
+
+        LottoResult lottoResult = lottos.calculateResult(winningNumbers);
+
+        long totalPrize = lottoResult.calculateTotalPrize();
+        double profitRate = purchaseAmount.calculateProfitRate(totalPrize);
+        OutputView.printResult(lottoResult, profitRate);
     }
 
     private PurchaseAmount inputPurchaseAmount() {
