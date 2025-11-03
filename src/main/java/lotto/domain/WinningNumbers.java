@@ -20,9 +20,9 @@ public class WinningNumbers {
     }
 
     public Rank determineRank(Lotto lotto) {
-        int matchCount = winningLotto.countMatches(lotto);
-        boolean matchBonus = lotto.numbers().contains(bonusNumber);
-        return Rank.of(matchCount, matchBonus);
+        int matchedCount = winningLotto.countMatches(lotto);
+        boolean bonusMatched = lotto.numbers().contains(bonusNumber);
+        return Rank.of(matchedCount, bonusMatched);
     }
 
     private int preprocessBonusNumberInput(String bonusNumberInput) {
