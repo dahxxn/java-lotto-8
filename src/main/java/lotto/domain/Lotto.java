@@ -35,10 +35,10 @@ public class Lotto {
     }
 
     private void validateNumberRange(List<Integer> numbers) {
-        for (int number : numbers) {
-            if (number < LOTTO_NUMBER_RANGE_START || number > LOTTO_NUMBER_RANGE_END) {
-                throw new IllegalArgumentException(LOTTO_ERROR_NUMBER_OUT_OF_RANGE.getMessage());
-            }
+        boolean hasOutOfRange = numbers.stream()
+                .anyMatch(n -> n < LOTTO_NUMBER_RANGE_START || n > LOTTO_NUMBER_RANGE_END);
+        if (hasOutOfRange) {
+            throw new IllegalArgumentException(LOTTO_ERROR_NUMBER_OUT_OF_RANGE.getMessage());
         }
     }
 
