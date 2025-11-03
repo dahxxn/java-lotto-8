@@ -1,10 +1,10 @@
-package lotto.view;
+package lotto.view.output;
 
-import static lotto.view.message.OutputMessage.LOTTO_COUNT_OUTPUT_FORMAT;
-import static lotto.view.message.OutputMessage.LOTTO_RESULT_COUNT_FORMAT;
-import static lotto.view.message.OutputMessage.LOTTO_RESULT_HEADER;
-import static lotto.view.message.OutputMessage.LOTTO_RESULT_LINE_BREAK;
-import static lotto.view.message.OutputMessage.PROFIT_RATE_FORMAT;
+import static lotto.view.output.OutputMessage.LOTTO_COUNT_OUTPUT_FORMAT;
+import static lotto.view.output.OutputMessage.LOTTO_RESULT_COUNT_FORMAT;
+import static lotto.view.output.OutputMessage.LOTTO_RESULT_HEADER;
+import static lotto.view.output.OutputMessage.LOTTO_RESULT_LINE_BREAK;
+import static lotto.view.output.OutputMessage.PROFIT_RATE_FORMAT;
 
 import java.util.List;
 import lotto.constant.Rank;
