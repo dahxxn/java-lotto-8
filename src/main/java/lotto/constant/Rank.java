@@ -21,22 +21,24 @@ public enum Rank {
     }
 
     public static Rank of(int matchCount, boolean matchBonus) {
-        if (matchCount == 6) {
-            return FIRST;
-        }
-        if (matchCount == 5 && matchBonus) {
-            return SECOND;
-        }
-        if (matchCount == 5) {
-            return THIRD;
-        }
-        if (matchCount == 4) {
-            return FOURTH;
-        }
-        if (matchCount == 3) {
-            return FIFTH;
+        for (Rank rank : values()) {
+            if (!isSameCount(rank, matchCount)) {
+                continue;
+            }
+            if (isSecondWithBonus(rank, matchBonus)) {
+                return SECOND;
+            }
+            return rank;
         }
         return NONE;
+    }
+
+    private static boolean isSameCount(Rank rank, int matchCount) {
+        return rank.matchCount == matchCount;
+    }
+
+    private static boolean isSecondWithBonus(Rank rank, boolean matchBonus) {
+        return rank.matchCount == SECOND.matchCount && matchBonus;
     }
 
     public int getPrize() {
